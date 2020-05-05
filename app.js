@@ -58,6 +58,7 @@ const Rostering = function (){
       promptIntern();
     }
   });
+}
 
 const promptEng = function(){
   inquirer
@@ -85,6 +86,7 @@ const promptEng = function(){
     ]).then(data => {
       const eng = new Engineer(data.name, data.id, data.email, data.github);
       employees.push(eng);
+      promptAgain();
     })
 }
 const promptIntern = function(){
@@ -113,9 +115,38 @@ const promptIntern = function(){
     ]).then(data => {
       const int = new Intern(data.name, data.id, data.email, data.school);
       employees.push(int);
+      promptAgain();
     })
 }
+const promptAgain = function (){
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Which employee are you adding next?",
+        name: "roleEmployee",
+        choices: [
+          "Engineer",
+          "Intern",
+          {
+            name: "I am not adding more employees",
+            value: false
+  
+          }
+      ]
+    }
+    ]).then(data => {
+    if(data.roleEmployee === "Engineer"){
+      promptEng();
+    }else if(data.roleEmployee === "Intern"){
+      promptIntern();
+    }
+  });
 }
+    
+
+
+
 Rostering();
 
 
