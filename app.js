@@ -13,6 +13,7 @@ const render = require("./lib/htmlRenderer");
 const employees = [];
 
 const Rostering = function (){
+return new Promise(function(resolve, reject) {
     inquirer
     .prompt([
       {
@@ -33,7 +34,7 @@ const Rostering = function (){
       {
         type: "input",
         message: "Type your office number",
-        name: "officenumber"
+        name: "officeNumber"
       },
       {
         type: "list",
@@ -44,20 +45,25 @@ const Rostering = function (){
           "Intern",
           {
             name: "I am not adding more employees",
-            value: false
+            //value: false
   
           }
       ]
     }
     ]).then(data => {
-    const manager = new Manager (data.name, data.id, data.email, data.officenumber);
+    const manager = new Manager (data.name, data.id, data.email, data.officeNumber);
     employees.push(manager);
     if(data.roleEmployee === "Engineer"){
       promptEng();
+      
+      
     }else if(data.roleEmployee === "Intern"){
-      promptIntern();
-    }
+      promptIntern();    
+    }else if(data.roleEmployee === "I am not adding more employees"){
+      return resolve();
+    } 
   });
+});
 }
 
 const promptEng = function(){
@@ -84,8 +90,8 @@ const promptEng = function(){
         name: "github"
       }
     ]).then(data => {
-      const eng = new Engineer(data.name, data.id, data.email, data.github);
-      employees.push(eng);
+      const engineer = new Engineer(data.name, data.id, data.email, data.github);
+      employees.push(engineer);
       promptAgain();
     })
 }
@@ -113,8 +119,8 @@ const promptIntern = function(){
         name: "school"
       }
     ]).then(data => {
-      const int = new Intern(data.name, data.id, data.email, data.school);
-      employees.push(int);
+      const intern = new Intern(data.name, data.id, data.email, data.school);
+      employees.push(intern);
       promptAgain();
     })
 }
@@ -144,10 +150,15 @@ const promptAgain = function (){
   });
 }
     
+Rostering().then(() => {
+ console.log("Yey");
+ console.log(employees);
+ render(employees);
+ 
+});
 
 
 
-Rostering();
 
 
 
