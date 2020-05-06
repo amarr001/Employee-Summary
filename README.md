@@ -1,14 +1,14 @@
 # Table of contents
- * [Installation](<a href="#Installation">Installation</a>) 
+ * [Installation](#Installation) 
 
- * [How to use](#usage) 
+ * [How to use](#How to use) 
 
  * [Testing](#Testing) 
 # Template Engine - Employee Summary 
- This projects aims at building a Node CLI that takes in information about employees and generates and HTML webpage that displays summaries for each person. This project will be tested using Test-driven Development concepts. 
+ This project builds a Node CLI that takes in information about employees and generates an HTML webpage that displays summaries for each person. 
 # Installation 
- `node template.js`  
+ `npm install` then `node app.js` in your command line  
 # How to use 
- ... 
+ Open your command line and make sure you are in the project's directory, then run npm install. Type node app.js, answer the prompts and check the file `team.html` generated after answering the prompts. 
 # Testing 
- `npm run test`  
+ `npm test` 
