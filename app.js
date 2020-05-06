@@ -46,8 +46,7 @@ return new Promise(function(resolve, reject) {
           "Intern",
           {
             name: "I am not adding more employees",
-            //value: false
-  
+            
           }
       ]
     }
@@ -153,16 +152,15 @@ const promptAgain = function (){
 });
 }
 
-const teamTemplate = render(employees);
 
 
 Rostering()
 .then(() => {
- console.log("Continue");
-  
+ console.log("Continue"); 
 })
 .catch(() => {
-  fs.writeFile(outputPath, teamTemplate , function(err) {
+  const teamTemplate = render(employees);
+  fs.writeFile(outputPath, teamTemplate , "utf-8", function(err) {
 
     if (err) {
       return console.log(err);
