@@ -12,6 +12,7 @@ const render = require("./lib/htmlRenderer");
 
 const employees = [];
 
+
 const Rostering = function (){
 return new Promise(function(resolve, reject) {
     inquirer
@@ -56,15 +57,13 @@ return new Promise(function(resolve, reject) {
     if(data.roleEmployee === "Engineer"){
       promptEng();
       
-      
     }else if(data.roleEmployee === "Intern"){
-      promptIntern();    
+      promptIntern(); 
+         
     }else if(data.roleEmployee === "I am not adding more employees"){
-      return resolve();
+      return reject();
     } 
   });
-});
-}
 
 const promptEng = function(){
   inquirer
@@ -125,6 +124,7 @@ const promptIntern = function(){
     })
 }
 const promptAgain = function (){
+  
   inquirer
     .prompt([
       {
@@ -136,8 +136,7 @@ const promptAgain = function (){
           "Intern",
           {
             name: "I am not adding more employees",
-            value: false
-  
+            
           }
       ]
     }
@@ -146,16 +145,35 @@ const promptAgain = function (){
       promptEng();
     }else if(data.roleEmployee === "Intern"){
       promptIntern();
-    }
+    }else if(data.roleEmployee === "I am not adding more employees"){
+      return reject();
+    } 
   });
 }
-    
-Rostering().then(() => {
- console.log("Yey");
- console.log(employees);
- render(employees);
- 
 });
+}
+
+const teamTemplate = render(employees);
+
+
+Rostering()
+.then(() => {
+ console.log("Continue");
+  
+})
+.catch(() => {
+  fs.writeFile(outputPath, teamTemplate , function(err) {
+
+    if (err) {
+      return console.log(err);
+    }
+  
+    console.log("Success!");
+    console.log(employees);
+  })
+})
+
+
 
 
 
